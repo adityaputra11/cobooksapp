@@ -17,7 +17,7 @@ const LoginScreen = () => {
   };
   const storeData = async () => {
     try {
-      const jsonValue = JSON.stringify('masuk woi');
+      const jsonValue = 'something';
       signIn(jsonValue);
       await AsyncStorage.setItem('@user_token', jsonValue);
     } catch (e) {

@@ -30,8 +30,12 @@ const HomeScreen = (props: PropsHome) => {
     apiGet('/subjects/love.json').then(setBooks);
   }, []);
 
-  const navigateToDetail = () => {
-    props.navigation.navigate('DetailBook');
+  const navigateToDetail = (item: Book) => {
+    props.navigation.navigate('DetailBook', {
+      title: item.title,
+      edition_count: item.edition_count,
+      author: item.authors[0].name,
+    });
   };
 
   const onSearchSubject = (e: string) => {
@@ -43,7 +47,9 @@ const HomeScreen = (props: PropsHome) => {
   };
 
   const renderItem: ListRenderItem<Book> = ({item}) => (
-    <TouchableOpacity style={styles.itemContainer} onPress={navigateToDetail}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => navigateToDetail(item)}>
       <Image source={img.placeholder_book} style={styles.imgBook} />
       <Spacer width={10} />
       <View>

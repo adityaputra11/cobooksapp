@@ -10,7 +10,10 @@ interface IButton {
 
 const Button = (props: IButton) => {
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
+    <TouchableOpacity
+      style={styles.buttonContainer}
+      onPress={props.onPress}
+      testID={props.testID}>
       <Text style={styles.label}>{props.label}</Text>
     </TouchableOpacity>
   );
