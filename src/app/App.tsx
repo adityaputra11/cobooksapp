@@ -9,31 +9,27 @@ import {RootStackParamList} from '../utils/navigation';
 import {EUSER, PropsAction, PropsUser} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from './AuthContext';
+import {StyleSheet, Text, View} from 'react-native';
+import {color} from '../utils/constant';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const initialState = {isLoading: true, isSignout: true, userToken: null};
+const initialState = {isLoading: true, userToken: null};
 
 function App() {
   const reducerUser = (state: PropsUser, action: PropsAction) => {
     switch (action.type) {
-      case EUSER.RESTORE_TOKEN:
+      case EUSER.SIGN_IN:
         return {
           ...state,
           userToken: action.token,
           isLoading: false,
         };
-      case EUSER.SIGN_IN:
-        return {
-          ...state,
-          isSignout: false,
-          userToken: action.token,
-        };
       case EUSER.SIGN_OUT:
         return {
           ...state,
-          isSignout: true,
           userToken: null,
+          isLoading: false,
         };
     }
   };
@@ -46,11 +42,10 @@ function App() {
       try {
         userToken = await AsyncStorage.getItem('@user_token');
       } catch (e) {
-        // Restoring token failed
+        console.log('error', e);
       }
-      console.log('user_token', userToken);
 
-      dispatch({type: EUSER.RESTORE_TOKEN, token: userToken});
+      dispatch({type: EUSER.SIGN_IN, token: userToken});
     };
 
     bootstrapAsync();
@@ -66,13 +61,20 @@ function App() {
     [],
   );
 
+  if (state.isLoading) {
+    return (
+      <View style={styles.splashContainer}>
+        <Text>Loading ...</Text>
+      </View>
+    );
+  }
   return (
     <AuthContext.Provider value={authContext}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        {state.isSignout ? (
+        {state.userToken === null ? (
           <Stack.Screen name="Login" component={LoginScreen} />
         ) : (
           <>
@@ -84,5 +86,14 @@ function App() {
     </AuthContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  splashContainer: {
+    flex: 1,
+    backgroundColor: color.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default App;
