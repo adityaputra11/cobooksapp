@@ -23,7 +23,7 @@ const initialStateBooks = {
   works: [],
 };
 
-const HomeScreen = (props: PropsHome) => {
+const HomeScreen = ({navigation}: PropsHome) => {
   const [books, setBooks] = useState<Books>(initialStateBooks);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const HomeScreen = (props: PropsHome) => {
   }, []);
 
   const navigateToDetail = (item: Book) => {
-    props.navigation.navigate('DetailBook', {
+    navigation.navigate('DetailBook', {
       title: item.title,
       edition_count: item.edition_count,
       author: item.authors[0].name,

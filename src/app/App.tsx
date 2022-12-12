@@ -4,13 +4,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
 import DetailBookScreen from '../screens/detailbookscreen';
 import HomeScreen from '../screens/homescreen';
-import LoginScreen from '../screens/loginscreen';
-import {RootStackParamList} from '../utils/navigation';
+import {RootStackParamList, TabRootStackParamList} from '../utils/navigation';
 import {EUSER, PropsAction, PropsUser} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from './AuthContext';
 import {StyleSheet, Text, View} from 'react-native';
 import {color} from '../utils/constant';
+
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ProfileScreen from '../screens/profilescreen';
+
+const Tab = createBottomTabNavigator<TabRootStackParamList>();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -74,18 +78,24 @@ function App() {
         screenOptions={{
           headerShown: false,
         }}>
-        {state.userToken === null ? (
-          <Stack.Screen name="Login" component={LoginScreen} />
-        ) : (
-          <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="DetailBook" component={DetailBookScreen} />
-          </>
-        )}
+        <Stack.Screen name="HomeTab" component={HomeTabs} />
+        <Stack.Screen name="DetailBook" component={DetailBookScreen} />
       </Stack.Navigator>
     </AuthContext.Provider>
   );
 }
+
+const HomeTabs = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
   splashContainer: {
