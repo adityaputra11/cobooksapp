@@ -1,20 +1,18 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {Text, View} from 'react-native';
 import Button from '../../components/button';
 import Spacer from '../../components/spacer';
 import Input from '../../components/textinput';
 // import {RootStackParamList} from '../../utils/navigation';
-import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../../app/AuthContext';
+import styles from './styles';
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen = () => {
   const {signIn} = React.useContext(AuthContext);
   const navigateToHomeScene = () => {
-    console.log('masook pak eko');
     storeData();
   };
   const storeData = async () => {

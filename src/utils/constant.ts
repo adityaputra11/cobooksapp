@@ -2,6 +2,8 @@ const color = {
   primary: '#6495ED',
   secondary: '#FFFFFF',
   alternative: '#225ec7',
+  secondary_alternative: '#F0F8FF',
+  dark: '#000000',
 };
 
 const size = {
