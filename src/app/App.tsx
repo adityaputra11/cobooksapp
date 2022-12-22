@@ -13,6 +13,7 @@ import {color} from '../utils/constant';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ProfileScreen from '../screens/profilescreen';
+import LoginScreen from '../screens/loginscreen';
 
 const Tab = createBottomTabNavigator<TabRootStackParamList>();
 
@@ -78,8 +79,14 @@ function App() {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="HomeTab" component={HomeTabs} />
-        <Stack.Screen name="DetailBook" component={DetailBookScreen} />
+        {state.userToken == null ? (
+          <Stack.Screen name="Login" component={LoginScreen} />
+        ) : (
+          <>
+            <Stack.Screen name="HomeTab" component={HomeTabs} />
+            <Stack.Screen name="DetailBook" component={DetailBookScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </AuthContext.Provider>
   );
