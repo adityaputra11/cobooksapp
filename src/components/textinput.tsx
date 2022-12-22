@@ -7,12 +7,14 @@ interface IInput {
   secureTextEntry?: boolean;
   onChangeText: (e: any) => void;
   placeholder: string;
+  value?: string;
 }
 
 const Input = (props: IInput) => {
   return (
     <View style={styles.textfieldContainer}>
       <TextInput
+        value={props.value}
         testID={props.testID}
         secureTextEntry={props.secureTextEntry}
         onChangeText={props.onChangeText}

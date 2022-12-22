@@ -1,5 +1,5 @@
-import React from 'react';
-import {Modal, View} from 'react-native';
+import React, {useState} from 'react';
+import {Modal, Text, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import {color} from '../utils/constant';
 
@@ -10,6 +10,7 @@ interface IPickupCalendar {
 }
 
 const PickupCalendar = (props: IPickupCalendar) => {
+  const [toDate, setToDate] = useState<string | undefined>(undefined);
   return (
     <Modal
       animationType="slide"
@@ -18,9 +19,14 @@ const PickupCalendar = (props: IPickupCalendar) => {
       onRequestClose={props.toggleVisible}>
       <View style={{flex: 1, backgroundColor: color.secondary}}>
         <Calendar
+          date={toDate}
+          markedDates={{
+            [toDate!!]: {selected: true, selectedColor: 'blue'},
+          }}
           onDayPress={day => {
             props.toggleVisible();
             props.setDate(day.dateString);
+            setToDate(day.dateString);
           }}
         />
       </View>

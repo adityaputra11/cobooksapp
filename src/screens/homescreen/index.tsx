@@ -1,3 +1,4 @@
+import {PerformanceMeasureView} from '@shopify/react-native-performance';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -23,7 +24,7 @@ const initialStateBooks = {
   works: [],
 };
 
-const HomeScreen = (props: PropsHome) => {
+const HomeScreen = ({navigation}: PropsHome) => {
   const [books, setBooks] = useState<Books>(initialStateBooks);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const HomeScreen = (props: PropsHome) => {
   }, []);
 
   const navigateToDetail = (item: Book) => {
-    props.navigation.navigate('DetailBook', {
+    navigation.navigate('DetailBook', {
       title: item.title,
       edition_count: item.edition_count,
       author: item.authors[0].name,
@@ -67,21 +68,33 @@ const HomeScreen = (props: PropsHome) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Spacer height={10} />
-      <Input
-        placeholder="search subject example `love`"
-        onChangeText={debounce(onSearchSubject)}
-        testID={'input_subject'}
-      />
-      <Spacer height={10} />
-      <FlatList
-        style={styles.listContainer}
-        data={books?.works}
-        renderItem={renderItem}
-        keyExtractor={item => item.key}
-      />
-    </View>
+    <PerformanceMeasureView
+      screenName="Home"
+      interactive={books !== initialStateBooks}>
+      <View style={styles.container}>
+        {books === initialStateBooks ? (
+          <>
+            <Text>Loading ...</Text>
+          </>
+        ) : (
+          <>
+            <Spacer height={10} />
+            <Input
+              placeholder="search subject example `love`"
+              onChangeText={debounce(onSearchSubject)}
+              testID={'input_subject'}
+            />
+            <Spacer height={10} />
+            <FlatList
+              style={styles.listContainer}
+              data={books?.works}
+              renderItem={renderItem}
+              keyExtractor={item => item.key}
+            />
+          </>
+        )}
+      </View>
+    </PerformanceMeasureView>
   );
 };
 

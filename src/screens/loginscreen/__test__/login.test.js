@@ -6,7 +6,13 @@ describe('Login Screen', () => {
   it('should go to login', () => {
     const screen = render(<LoginScreen />);
     const loginButton = screen.getByTestId('button_login');
+    const inputUserName = screen.getByTestId('input_username');
+    const inputPassword = screen.getByTestId('input_password');
     fireEvent.press(loginButton);
-    expect(AsyncStorage.setItem).toBeCalledWith('@user_token', 'something');
+    fireEvent.changeText(inputUserName, 'aditya_user');
+    fireEvent.changeText(inputPassword, '12345');
+    expect(inputUserName.props.value).toEqual('aditya_user');
+    expect(inputPassword.props.value).toEqual('12345');
+    // expect(AsyncStorage.setItem).toBeCalledWith('@user_token', 'something');
   });
 });

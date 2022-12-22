@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import Button from '../../components/button';
 import Spacer from '../../components/spacer';
@@ -7,11 +7,13 @@ import Input from '../../components/textinput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../../app/AuthContext';
 import styles from './styles';
+import {PerformanceMeasureView} from '@shopify/react-native-performance';
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen = () => {
   const {signIn} = React.useContext(AuthContext);
+  const [formLogin, setFormLogin] = useState({username: '', password: ''});
   const navigateToHomeScene = () => {
     storeData();
   };
@@ -24,30 +26,42 @@ const LoginScreen = () => {
       // saving error
     }
   };
+
+  const onHandleForm = (name: string, value: string) => {
+    setFormLogin(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
-      <View>
+    <PerformanceMeasureView screenName="Login">
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome Back</Text>
+        <View>
+          <Spacer height={10} />
+          <Input
+            value={formLogin.username}
+            placeholder="username"
+            onChangeText={e => onHandleForm('username', e)}
+            testID="input_username"
+          />
+          <Spacer height={10} />
+          <Input
+            value={formLogin.password}
+            placeholder="password"
+            onChangeText={e => onHandleForm('password', e)}
+            testID="input_password"
+          />
+        </View>
         <Spacer height={10} />
-        <Input
-          placeholder="username"
-          onChangeText={() => {}}
-          testID="input_username"
-        />
-        <Spacer height={10} />
-        <Input
-          placeholder="password"
-          onChangeText={() => {}}
-          testID="input_password"
+        <Button
+          label="Login"
+          onPress={navigateToHomeScene}
+          testID="button_login"
         />
       </View>
-      <Spacer height={10} />
-      <Button
-        label="Login"
-        onPress={navigateToHomeScene}
-        testID="button_login"
-      />
-    </View>
+    </PerformanceMeasureView>
   );
 };
 

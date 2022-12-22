@@ -1,14 +1,16 @@
 import {StyleSheet} from 'react-native';
-import {fontSize, size} from '../../utils/constant';
+import {color, fontSize} from '../../utils/constant';
 export const styles = StyleSheet.create({
-  container: {flex: 1, padding: size.l},
+  container: {flex: 1, backgroundColor: color.secondary_alternative},
   imageBook: {
-    width: 200,
-    height: 300,
+    width: 120,
+    height: 180,
+    borderRadius: 20,
   },
   titleBook: {
     fontWeight: 'bold',
-    fontSize: fontSize.xxl,
+    fontSize: fontSize.l,
+    width: '90%',
   },
   titlePickup: {
     fontWeight: 'bold',
@@ -17,10 +19,12 @@ export const styles = StyleSheet.create({
   titleDetail: {
     fontWeight: 'bold',
     fontSize: fontSize.xl,
-    alignSelf: 'center',
+    paddingStart: 20,
+    color: color.dark,
   },
   detailBookContainer: {
     flexDirection: 'row',
+    padding: 16,
   },
   pickupContainer: {
     flexDirection: 'row',
@@ -30,5 +34,12 @@ export const styles = StyleSheet.create({
   textChange: {
     fontSize: fontSize.m,
     color: 'red',
+  },
+  bottomSheet: {
+    flex: 1,
+    backgroundColor: color.secondary,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20,
+    padding: 20,
   },
 });
