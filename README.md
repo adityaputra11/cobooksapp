@@ -10,8 +10,7 @@ Android
 
 IOS
 
-![Uploading Simulator Screen Recording - iPhone 15 Pro Max - 2023-11-07 at 16.50.03.gif…]()
-
+![Simulator Screen Recording - iPhone 15 Pro Max - 2023-11-07 at 16 50 03](https://github.com/adityaputra11/cobooksapp/assets/24503826/904a0e85-f900-48e6-9916-4198e514dd9c)
 
 
 
