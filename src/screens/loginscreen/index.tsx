@@ -7,7 +7,7 @@ import Input from '../../components/textinput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../../app/AuthContext';
 import styles from './styles';
-import {PerformanceMeasureView} from '@shopify/react-native-performance';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -35,33 +35,31 @@ const LoginScreen = () => {
   };
 
   return (
-    <PerformanceMeasureView screenName="Login">
-      <View style={styles.container}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <View>
-          <Spacer height={10} />
-          <Input
-            value={formLogin.username}
-            placeholder="username"
-            onChangeText={e => onHandleForm('username', e)}
-            testID="input_username"
-          />
-          <Spacer height={10} />
-          <Input
-            value={formLogin.password}
-            placeholder="password"
-            onChangeText={e => onHandleForm('password', e)}
-            testID="input_password"
-          />
-        </View>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Welcome Back</Text>
+      <View>
         <Spacer height={10} />
-        <Button
-          label="Login"
-          onPress={navigateToHomeScene}
-          testID="button_login"
+        <Input
+          value={formLogin.username}
+          placeholder="username"
+          onChangeText={e => onHandleForm('username', e)}
+          testID="input_username"
+        />
+        <Spacer height={10} />
+        <Input
+          value={formLogin.password}
+          placeholder="password"
+          onChangeText={e => onHandleForm('password', e)}
+          testID="input_password"
         />
       </View>
-    </PerformanceMeasureView>
+      <Spacer height={10} />
+      <Button
+        label="Login"
+        onPress={navigateToHomeScene}
+        testID="button_login"
+      />
+    </SafeAreaView>
   );
 };
 

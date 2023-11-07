@@ -10,6 +10,7 @@ export const api = create({
 export const apiGet = (path: string) =>
   api.get(path).then((response: ApiResponse<any>) => {
     const {ok, data} = response;
+    console.log('response', response);
     if (ok) {
       return data;
     }

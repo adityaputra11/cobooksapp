@@ -1,4 +1,3 @@
-import {PerformanceMeasureView} from '@shopify/react-native-performance';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -28,8 +27,22 @@ const HomeScreen = ({navigation}: PropsHome) => {
   const [books, setBooks] = useState<Books>(initialStateBooks);
 
   useEffect(() => {
-    apiGet('/subjects/love.json').then(setBooks);
+    getBooks();
   }, []);
+
+  const getBooks = async () => {
+    await apiGet('/subjects/love.json').then(setBooks);
+  };
+
+  const getMoreBooks = async () => {
+    await apiGet('/subjects/love.json').then(e =>
+      setBooks({
+        ...books,
+        works: [...books.works, ...e.works],
+        work_count: e.work_count + books.work_count,
+      }),
+    );
+  };
 
   const navigateToDetail = (item: Book) => {
     navigation.navigate('DetailBook', {
@@ -68,33 +81,30 @@ const HomeScreen = ({navigation}: PropsHome) => {
   );
 
   return (
-    <PerformanceMeasureView
-      screenName="Home"
-      interactive={books !== initialStateBooks}>
-      <View style={styles.container}>
-        {books === initialStateBooks ? (
-          <>
-            <Text>Loading ...</Text>
-          </>
-        ) : (
-          <>
-            <Spacer height={10} />
-            <Input
-              placeholder="search subject example `love`"
-              onChangeText={debounce(onSearchSubject)}
-              testID={'input_subject'}
-            />
-            <Spacer height={10} />
-            <FlatList
-              style={styles.listContainer}
-              data={books?.works}
-              renderItem={renderItem}
-              keyExtractor={item => item.key}
-            />
-          </>
-        )}
-      </View>
-    </PerformanceMeasureView>
+    <View style={styles.container}>
+      {books === initialStateBooks ? (
+        <>
+          <Text>Loading ...</Text>
+        </>
+      ) : (
+        <>
+          <Spacer height={40} />
+          <Input
+            placeholder="search subject example `love`"
+            onChangeText={debounce(onSearchSubject)}
+            testID={'input_subject'}
+          />
+          <Spacer height={10} />
+          <FlatList
+            style={styles.listContainer}
+            data={books?.works}
+            renderItem={renderItem}
+            keyExtractor={item => item.key}
+            onEndReached={getMoreBooks}
+          />
+        </>
+      )}
+    </View>
   );
 };
 

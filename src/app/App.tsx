@@ -79,14 +79,17 @@ function App() {
         screenOptions={{
           headerShown: false,
         }}>
-        {state.userToken == null ? (
+        <Stack.Screen name="HomeTab" component={HomeTabs} />
+        <Stack.Screen name="DetailBook" component={DetailBookScreen} />
+        {/* !!TODO FOR IMPLEMETN AUTH */}
+        {/* {state.userToken == null ? (
           <Stack.Screen name="Login" component={LoginScreen} />
         ) : (
           <>
             <Stack.Screen name="HomeTab" component={HomeTabs} />
             <Stack.Screen name="DetailBook" component={DetailBookScreen} />
           </>
-        )}
+        )} */}
       </Stack.Navigator>
     </AuthContext.Provider>
   );

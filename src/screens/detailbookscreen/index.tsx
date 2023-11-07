@@ -1,4 +1,3 @@
-import {PerformanceMeasureView} from '@shopify/react-native-performance';
 import React, {useCallback, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {img} from '../../assets';
@@ -20,53 +19,48 @@ const DetailBookScreen = (props: PropsDetail) => {
     setPickupDate(e);
   };
   return (
-    <PerformanceMeasureView screenName="Home">
-      <View style={styles.container}>
-        <Spacer height={20} />
-        <Text style={styles.titleDetail}>Detail Book</Text>
-        <Spacer height={20} />
-        <View style={styles.detailBookContainer}>
-          <Image style={styles.imageBook} source={img.placeholder_book} />
-          <Spacer width={20} />
-          <View>
-            <Spacer height={20} />
-            <Text
-              style={styles.titleBook}
-              numberOfLines={3}
-              ellipsizeMode="tail">
-              {props.route.params?.title}
-            </Text>
-            <Text>{props.route.params?.edition_count}</Text>
-            <Text>{props.route.params?.author}</Text>
-          </View>
-        </View>
-        <Spacer height={20} />
-        <View style={styles.bottomSheet}>
-          <Text style={styles.titlePickup}>Schedule Pickup</Text>
+    <View style={styles.container}>
+      <Spacer height={20} />
+      <Text style={styles.titleDetail}>Detail Book</Text>
+      <Spacer height={20} />
+      <View style={styles.detailBookContainer}>
+        <Image style={styles.imageBook} source={img.placeholder_book} />
+        <Spacer width={20} />
+        <View>
           <Spacer height={20} />
-          {pickupDate ? (
-            <View style={styles.pickupContainer}>
-              <Text>{new Date(pickupDate).toDateString()}</Text>
-              <TouchableOpacity onPress={setToggleVisible}>
-                <Text style={styles.textChange}>Change</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <Button
-              testID="button_pickup"
-              label="Pick date"
-              onPress={setToggleVisible}
-            />
-          )}
-
-          <PickupCalendar
-            setDate={onSetDate}
-            isVisible={isCalendarVisible}
-            toggleVisible={setToggleVisible}
-          />
+          <Text style={styles.titleBook} numberOfLines={3} ellipsizeMode="tail">
+            {props.route.params?.title}
+          </Text>
+          <Text>{props.route.params?.edition_count}</Text>
+          <Text>{props.route.params?.author}</Text>
         </View>
       </View>
-    </PerformanceMeasureView>
+      <Spacer height={20} />
+      <View style={styles.bottomSheet}>
+        <Text style={styles.titlePickup}>Schedule Pickup</Text>
+        <Spacer height={20} />
+        {pickupDate ? (
+          <View style={styles.pickupContainer}>
+            <Text>{new Date(pickupDate).toDateString()}</Text>
+            <TouchableOpacity onPress={setToggleVisible}>
+              <Text style={styles.textChange}>Change</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Button
+            testID="button_pickup"
+            label="Pick date"
+            onPress={setToggleVisible}
+          />
+        )}
+
+        <PickupCalendar
+          setDate={onSetDate}
+          isVisible={isCalendarVisible}
+          toggleVisible={setToggleVisible}
+        />
+      </View>
+    </View>
   );
 };
 

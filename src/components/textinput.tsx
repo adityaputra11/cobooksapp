@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: color.secondary,
     borderRadius: size.l,
     paddingStart: size.l,
+    minHeight: 40,
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: color.primary,
   },
